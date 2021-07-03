@@ -73,15 +73,13 @@ int main(int argc, const char **argv)
     // RoutePlanner object below in place of 10, 10, 90, 90.
     float start_x, start_y, end_x, end_y;
     getInputStartEnd(start_x, start_y, end_x, end_y);
-    std::cout << "\n### Start and End point ###\n";
-    std::cout << "Start point: {" << start_x << ", " << start_y << "}\n";
-    std::cout << "End point: {" << end_x << ", " << end_y << "}\n\n";
 
     // Build Model.
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.
-    RoutePlanner route_planner{model, 10, 10, 90, 90};
+    RoutePlanner route_planner{model, start_x, start_y, end_x, end_y};
+
     route_planner.AStarSearch();
 
     std::cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
