@@ -53,8 +53,19 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 // - Remove that node from the open_list.
 // - Return the pointer.
 
+bool compare_f (RouteModel::Node *node_a, RouteModel::Node *node_b) {
+    float f_a = node_a->g_value + node_a->h_value;
+    float f_b = node_b->g_value + node_b->h_value;
+    return (f_a > f_b);
+} 
 RouteModel::Node *RoutePlanner::NextNode() {
+    // Sort from highest to lowest
+    std::sort (this->open_list.begin(), this->open_list.end(), compare_f);
 
+    RouteModel::Node *lowest_f = this->open_list.back();
+    this->open_list.pop_back();     // discard lowest value from the list
+    
+    return (lowest_f);
 }
 
 
